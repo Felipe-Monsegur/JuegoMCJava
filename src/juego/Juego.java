@@ -4,6 +4,8 @@ import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.sound.sampled.Clip;
+
 import entorno.Entorno;
 import entorno.Herramientas;
 import entorno.InterfaceJuego;
@@ -12,6 +14,7 @@ public class Juego extends InterfaceJuego {
 
 	// El objeto Entorno que controla el tiempo y otros
 	private Entorno entorno;
+	private AudioPlayer audioPlayer;
 	private Fondo fondo;
 	private Lava lava;
 	private Ladrillo[][] pisos;
@@ -30,9 +33,12 @@ public class Juego extends InterfaceJuego {
 	public Juego() {
 		// Inicializa el objeto entorno
 		this.entorno = new Entorno(this, "Bastion Scape - Monsegur - V1.0.0", 800,600);
+		 audioPlayer = new AudioPlayer("sounds/Voicy_pigstep.mp3");
+		 audioPlayer.play();
+		
 		// Inicializar lo que haga falta para el juego
 		// ...
-
+		
 		this.fondo = new Fondo(entorno.ancho() / 2, entorno.alto() / 2);
 		this.pisos = new Ladrillo[5][]; // Crear 5 pisos en total
 		
@@ -42,7 +48,7 @@ public class Juego extends InterfaceJuego {
 		// Inicia el juego!
 		this.entorno.iniciar();
 		}
-	
+		
 		//reinicia el juego y vuelve a dibujar los pisos de manera diferente los trexs y la princesa, se reinicia el contador tmb
 		public void reiniciar() {
 		inmunidad=true;	//princesa inmune al daño hasta que se mueva
@@ -89,7 +95,7 @@ public class Juego extends InterfaceJuego {
 		this.vidas = 3;
 		this.steve = new Steve(entorno.ancho() / 2, entorno.alto() - 70);
 		this.flecha = null;
-
+		
 //        APARECER MUCHOS REXS METODO 1
 		Random random = new Random();
 		this.piglin = new Piglin[4][2]; // Crear 2 rexs por piso
