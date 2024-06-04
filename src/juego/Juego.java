@@ -16,7 +16,7 @@ public class Juego extends InterfaceJuego {
 	private Lava lava;
 	private Ladrillo[][] pisos;
 	private Steve steve;
-	private Bala balas;
+	private Flecha flecha;
 	private Piglin[][] piglin; // aparecer muchos rexs metodo 1
 	 private ArrayList<Portal> portales;
 	private int piglinEnPantalla;
@@ -29,7 +29,7 @@ public class Juego extends InterfaceJuego {
 
 	public Juego() {
 		// Inicializa el objeto entorno
-		this.entorno = new Entorno(this, "Super Elizabeth Sis, Volcano Edition - Grupo 9 - Monsegur - Moragues - V1.0.0", 800,600);
+		this.entorno = new Entorno(this, "Bastion Scape - Monsegur - V1.0.0", 800,600);
 		// Inicializar lo que haga falta para el juego
 		// ...
 
@@ -88,7 +88,7 @@ public class Juego extends InterfaceJuego {
 		this.piglinEnPantalla =0;
 		this.vidas = 3;
 		this.steve = new Steve(entorno.ancho() / 2, entorno.alto() - 70);
-		this.balas = null;
+		this.flecha = null;
 
 //        APARECER MUCHOS REXS METODO 1
 		Random random = new Random();
@@ -115,22 +115,24 @@ public class Juego extends InterfaceJuego {
 		//antes de empezar el juego
 		if (estadoInicio) {
 			// Mostrar pantalla de inicio con instrucciones
-			entorno.cambiarFont("Calibri", 40, java.awt.Color.magenta);
-			entorno.escribirTexto("Bienvenido a Super Elizabeth Sis,", entorno.ancho() / 2 - 250, entorno.alto() / 2 - 150);
+			entorno.cambiarFont("Calibri", 40, java.awt.Color.DARK_GRAY);
+			entorno.cambiarFont("Minecraft", 40, java.awt.Color.DARK_GRAY);
+			entorno.escribirTexto("Bienvenido a", entorno.ancho() / 2-120, entorno.alto() / 2 -150);
 			entorno.cambiarFont("Calibri", 40, java.awt.Color.ORANGE);
-			entorno.cambiarFont("Calibri", 40, java.awt.Color.ORANGE);
-			entorno.escribirTexto("Volcano Edition", entorno.ancho() / 2 - 100, entorno.alto() / 2 - 110);
+			entorno.cambiarFont("Minecraft", 40, java.awt.Color.ORANGE);
+			entorno.escribirTexto("BASTION SCAPE", entorno.ancho() / 2 -140, entorno.alto() / 2 - 110);
 			entorno.cambiarFont("Calibri", 30, java.awt.Color.white);
-			entorno.escribirTexto("Instrucciones:", entorno.ancho() / 2 - 200, entorno.alto() / 2 - 60);
-			entorno.escribirTexto("[←] Mover a la izquierda", entorno.ancho() / 2 - 200, entorno.alto() / 2 - 30);
-			entorno.escribirTexto("[→] Mover a la derecha", entorno.ancho() / 2 - 200, entorno.alto() / 2);
-			entorno.escribirTexto("[C] Dispara", entorno.ancho() / 2 - 200, entorno.alto() / 2 + 30);
-			entorno.escribirTexto("[X] Salta", entorno.ancho() / 2 - 200, entorno.alto() / 2 + 60);
-			entorno.escribirTexto("Reglas del Juego:", entorno.ancho() / 2 - 200, entorno.alto() / 2 + 100); 
-			entorno.escribirTexto("Tenes 3 vidas.", entorno.ancho() / 2 - 200, entorno.alto() / 2 + 130); 
-			entorno.escribirTexto("Si un hueso te toca, pierdes una vida.", entorno.ancho() / 2 - 200, entorno.alto() / 2 + 160);
-			entorno.escribirTexto("Si un Trex te toca, pierdes todas las vidas.", entorno.ancho() / 2 - 200, entorno.alto() / 2 + 190);
-			entorno.escribirTexto("Presiona [Enter] para comenzar", entorno.ancho() / 2 - 180, entorno.alto() / 2 + 240);
+			entorno.cambiarFont("Minecraft", 30, java.awt.Color.white);
+			entorno.escribirTexto("Instrucciones:", entorno.ancho() / 2 - 250, entorno.alto() / 2 - 60);
+			entorno.escribirTexto("[A] Mover a la izquierda", entorno.ancho() / 2 - 250, entorno.alto() / 2 - 30);
+			entorno.escribirTexto("[D] Mover a la derecha", entorno.ancho() / 2 - 250, entorno.alto() / 2);
+			entorno.escribirTexto("[W] Salta", entorno.ancho() / 2 - 250, entorno.alto() / 2 + 30);
+			entorno.escribirTexto("[C] Dispara", entorno.ancho() / 2 - 250, entorno.alto() / 2 + 60);			
+			entorno.escribirTexto("Reglas del Juego:", entorno.ancho() / 2 - 250, entorno.alto() / 2 + 100); 
+			entorno.escribirTexto("Tenes 3 vidas.", entorno.ancho() / 2 - 250, entorno.alto() / 2 + 130); 
+			entorno.escribirTexto("Si un hueso te toca, pierdes una vida.", entorno.ancho() / 2 - 250, entorno.alto() / 2 + 160);
+			entorno.escribirTexto("Si un Trex te toca, pierdes todas las vidas.", entorno.ancho() / 2 - 250, entorno.alto() / 2 + 190);
+			entorno.escribirTexto("Presiona [Enter] para comenzar", entorno.ancho() / 2 - 230, entorno.alto() / 2 + 240);
 			if (entorno.sePresiono(entorno.TECLA_ENTER)) {
 				estadoInicio = false; // Iniciar el juego cuando se presiona Enter
 				reiniciar();
@@ -174,9 +176,9 @@ public class Juego extends InterfaceJuego {
 							piglin[i][j].setHueso(null); // Eliminar hueso si sale de la pantalla
 						}
 						// Verificar colisión entre balas y huesos
-						if (this.balas != null && hueso.colisionConBala(this.balas)) {
+						if (this.flecha != null && hueso.colisionConFlecha(this.flecha)) {
 							piglin[i][j].setHueso(null); // Eliminar hueso si colisiona con la bala
-							this.balas = null;
+							this.flecha = null;
 						}
 						// Verificar colisión entre princesa y huesos
 						if (this.steve != null && !inmunidad && hueso.colisionConSteve(this.steve)) {
@@ -193,8 +195,25 @@ public class Juego extends InterfaceJuego {
 		
 		
 		
-		//aparece 1 trexs mas si solo hay 2 trexs en pantalla
-		if (this.piglinEnPantalla == 2) {
+		//aparece 1 trexs mas si solo hay 4 trexs en pantalla
+//		if (this.piglinEnPantalla == 4) {
+//		    Random random = new Random();
+//		    int nuevoI = random.nextInt(4); // Obtener un índice aleatorio para la fila
+//		    int nuevoJ = random.nextInt(1); // Obtener un índice aleatorio para la columna
+//		    // Verificar que la posición no este ocupada por un trex existente
+//		    while (piglin[nuevoI][nuevoJ] != null) {
+//		        nuevoI = random.nextInt(4);
+//		        nuevoJ = random.nextInt(piglin[nuevoI].length);
+//		    }
+//		    // Agregar un nuevo Trex en la posición aleatoria
+//		    piglin[nuevoI][nuevoJ] = new Piglin(random.nextInt(entorno.ancho()), entorno.alto() - (70 + nuevoI * 140));
+//		    this.piglinEnPantalla++;
+//		}
+
+		
+		
+//		//aparece 1 trexs mas si solo hay 4 trexs en pantalla
+		if (this.piglinEnPantalla == 4) {
 	        Random random = new Random();
 	        int nuevoI = random.nextInt(4); // Obtener un índice aleatorio para la fila
 	        int nuevoJ = random.nextInt(1); // Obtener un índice aleatorio para la columna
@@ -222,10 +241,10 @@ public class Juego extends InterfaceJuego {
 	        }
 	    }
 		
-		//princesa muere si pierde las vidas
-		if (this.vidas == 0) {
-			this.steve = null;
-		}
+	  //steve muere si pierde las vidas
+	  		if (this.vidas == 0) {
+	  			this.steve = null;
+	  		}
 
 		
 		//dibuja y mueve a la princesa
@@ -253,23 +272,23 @@ public class Juego extends InterfaceJuego {
 			
 			
 			// Dibujar y mover balas si están activas
-			if ((entorno.sePresiono(entorno.TECLA_ESPACIO) || entorno.sePresiono('c')) && this.balas == null) {
-				this.balas = steve.disparar();
+			if ((entorno.sePresiono(entorno.TECLA_ESPACIO) || entorno.sePresiono('c')) && this.flecha == null) {
+				this.flecha = steve.disparar();
 				inmunidad=false;//princesa pierde la inmunidad al daño
 			}
 
 			
 			// dibuja las balas
-			if (this.balas != null) {
-				this.balas.dibujar(entorno);
-				this.balas.mover();
+			if (this.flecha != null) {
+				this.flecha.dibujar(entorno);
+				this.flecha.mover();
 
 				// detecta colision de la bala con los trex
 				for (int i = 0; i < piglin.length; i++) {
 					for (int j = 0; j < piglin[i].length; j++) {
-						if (piglin[i][j] != null && piglin[i][j].colisionConBala(this.balas)) {
+						if (piglin[i][j] != null && piglin[i][j].colisionConFlecha(this.flecha)) {
 							piglin[i][j] = null; // convierte en null al trex y a las balas
-							this.balas = null;
+							this.flecha = null;
 							this.piglinEnPantalla-=1;
 							this.piglinEliminados+=1; // Incrementar contador de trexs eliminados
 							this.puntos += 2;
@@ -278,8 +297,8 @@ public class Juego extends InterfaceJuego {
 
 				}
 				//bala desaparece si choca con lso bordes
-				if (this.balas != null && (this.balas.getX() > entorno.ancho() || this.balas.getX() < 0)) {
-					this.balas = null;
+				if (this.flecha != null && (this.flecha.getX() > entorno.ancho() || this.flecha.getX() < 0)) {
+					this.flecha = null;
 				}
 			}
 		}
@@ -295,7 +314,8 @@ public class Juego extends InterfaceJuego {
 		}
 		
 		//mostrar puntos y vidas
-				entorno.cambiarFont("Calibri", 23, java.awt.Color.black);
+				entorno.cambiarFont("Calibri", 23, java.awt.Color.white);
+				entorno.cambiarFont("minecraft", 23, java.awt.Color.white);
 				entorno.escribirTexto("PIGLINS ELIMINADOS:" + this.piglinEliminados, 0, entorno.alto() - 24);
 				entorno.escribirTexto("PUNTOS:" + this.puntos, 0, entorno.alto() - 1);
 				for (int i = 0; i < vidas; i++) {
@@ -308,12 +328,14 @@ public class Juego extends InterfaceJuego {
 			this.imag = Herramientas.cargarImagen("styles/fondonegro.png");
 			entorno.dibujarImagen(imag, entorno.ancho() / 2, entorno.alto() / 2, 0, 1);
 			entorno.cambiarFont("Calibri", 50, java.awt.Color.red);
-			entorno.escribirTexto("PERDISTE", entorno.ancho() / 2 - 110, entorno.alto() / 2 - 50);
+			entorno.cambiarFont("minecraft", 50, java.awt.Color.red);
+			entorno.escribirTexto("PERDISTE", entorno.ancho() / 2-120, entorno.alto() / 2 -150);
 			entorno.cambiarFont("Calibri", 40, java.awt.Color.white);
-			entorno.escribirTexto("PIGLINS ELIMINADOS:" + this.piglinEliminados, entorno.ancho() / 2 - 250,entorno.alto() / 2 + 100);
-			entorno.escribirTexto("PUNTOS:" + this.puntos, entorno.ancho() / 2 - 250, entorno.alto() / 2 + 140);
-			entorno.escribirTexto("JUEGO TERMINADO", entorno.ancho() / 2 - 180, entorno.alto() / 2);
-			entorno.escribirTexto("Presiona [r] para volver a jugar", entorno.ancho() / 2 - 250,entorno.alto() / 2 + 50);
+			entorno.cambiarFont("minecraft", 40, java.awt.Color.white);
+			entorno.escribirTexto("JUEGO TERMINADO", entorno.ancho() / 2 -200, entorno.alto() / 2 - 110);
+			entorno.escribirTexto("-PIGLINS ELIMINADOS:" + this.piglinEliminados, entorno.ancho() / 2 - 250, entorno.alto() / 2 - 60);
+			entorno.escribirTexto("-PUNTOS:" + this.puntos, entorno.ancho() / 2 - 250, entorno.alto() / 2 -10);
+			entorno.escribirTexto("Presiona [r] para volver a jugar", entorno.ancho() / 2 - 300,entorno.alto() / 2 + 50);
 			// Detectar si se presiona la tecla 'r' para reiniciar el juego
 		}
 		if (this.steve != null && steve.getY() < 0) {
@@ -323,12 +345,14 @@ public class Juego extends InterfaceJuego {
 			this.imag = Herramientas.cargarImagen("styles/fondonegro.png");
 			entorno.dibujarImagen(imag, entorno.ancho() / 2, entorno.alto() / 2, 0, 1);
 			entorno.cambiarFont("Calibri", 50, java.awt.Color.green);
-			entorno.escribirTexto("GANASTE", entorno.ancho() / 2 - 110, entorno.alto() / 2 - 50);
+			entorno.cambiarFont("minecraft", 50, java.awt.Color.green);
+			entorno.escribirTexto("GANASTE", entorno.ancho() / 2-120, entorno.alto() / 2 -150);
 			entorno.cambiarFont("Calibri", 40, java.awt.Color.white);
-			entorno.escribirTexto("PIGLINS ELIMINADOS:" + this.piglinEliminados, entorno.ancho() / 2 - 250,entorno.alto() / 2 + 100);
-			entorno.escribirTexto("PUNTOS:" + this.puntos, entorno.ancho() / 2 - 250, entorno.alto() / 2 + 140);
-			entorno.escribirTexto("JUEGO TERMINADO", entorno.ancho() / 2 - 180, entorno.alto() / 2);
-			entorno.escribirTexto("Presiona [r] para volver a jugar", entorno.ancho() / 2 - 250,entorno.alto() / 2 + 50);
+			entorno.cambiarFont("minecraft", 40, java.awt.Color.white);
+			entorno.escribirTexto("JUEGO TERMINADO", entorno.ancho() / 2 -200, entorno.alto() / 2 - 110);
+			entorno.escribirTexto("-PIGLINS ELIMINADOS:" + this.piglinEliminados, entorno.ancho() / 2 - 250, entorno.alto() / 2 - 60);
+			entorno.escribirTexto("-PUNTOS:" + this.puntos, entorno.ancho() / 2 - 250, entorno.alto() / 2 -10);
+			entorno.escribirTexto("Presiona [r] para volver a jugar", entorno.ancho() / 2 - 300,entorno.alto() / 2 + 50);
 			// Detectar si se presiona la tecla 'r' para reiniciar el juego
 		}
 		

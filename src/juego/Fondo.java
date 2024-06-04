@@ -8,7 +8,8 @@ public class Fondo {
 	private Image imag;
 
 	public Fondo(double x, double y) {
-		this.imag = Herramientas.cargarImagen("styles/magma.png");
+//		this.imag = Herramientas.cargarImagen("styles/magma.png");
+		this.imag = Herramientas.cargarImagen("styles/netherrack fondo.png");
 	}
 
 	public void dibujar(Entorno e) {

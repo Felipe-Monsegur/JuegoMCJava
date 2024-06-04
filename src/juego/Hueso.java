@@ -18,13 +18,14 @@ public class Hueso {
 		this.y = y;
 		this.diametro = 25;
 		this.velocidad = 2;
-		this.imag = Herramientas.cargarImagen("styles/hueso.png");
+//		this.imag = Herramientas.cargarImagen("styles/hueso.png");
+		this.imag = Herramientas.cargarImagen("styles/golden axe.png");
 		this.direccion = direccion;
 	}
 
 	public void dibujar(Entorno e) {
 //		e.dibujarCirculo(this.x, this.y, this.diametro, this.color);
-		e.dibujarImagen(imag, x, y, x * 0.02, 1.6);
+		e.dibujarImagen(imag, x, y, x * 0.08, 1.9);
 	}
 
 	public void mover() {
@@ -38,11 +39,11 @@ public class Hueso {
 		return false;
 	}
 
-	public boolean colisionConBala(Bala bala) {
-		return bala != null && this.x + this.diametro / 2 > bala.getX() - bala.getDiametro() / 2
-				&& this.x - this.diametro / 2 < bala.getX() + bala.getDiametro() / 2
-				&& this.y + this.diametro / 2 > bala.getY() - bala.getDiametro() / 2
-				&& this.y - this.diametro / 2 < bala.getY() + bala.getDiametro() / 2;
+	public boolean colisionConFlecha(Flecha flecha) {
+		return flecha != null && this.x + this.diametro / 2 > flecha.getX() - flecha.getDiametro() / 2
+				&& this.x - this.diametro / 2 < flecha.getX() + flecha.getDiametro() / 2
+				&& this.y + this.diametro / 2 > flecha.getY() - flecha.getDiametro() / 2
+				&& this.y - this.diametro / 2 < flecha.getY() + flecha.getDiametro() / 2;
 	}
 
 	public boolean colisionConSteve(Steve steve) {

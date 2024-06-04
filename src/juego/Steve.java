@@ -68,8 +68,8 @@ public class Steve {
 		}
 	}
 
-	public Bala disparar() {
-		return new Bala(this.x, this.y-10, this.direccion);
+	public Flecha disparar() {
+		return new Flecha(this.x, this.y-10, this.direccion);
 
 	}
 

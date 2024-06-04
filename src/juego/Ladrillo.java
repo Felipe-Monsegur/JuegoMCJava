@@ -21,8 +21,10 @@ public class Ladrillo {
 		this.y = y;
 		this.ancho = 50;
 		this.alto = 50;
-		this.imag = Herramientas.cargarImagen("styles/ladrillo.png");
-		this.imagM = Herramientas.cargarImagen("styles/metal.png");
+//		this.imag = Herramientas.cargarImagen("styles/ladrillo.png");
+		this.imag = Herramientas.cargarImagen("styles/bastionblock.png");
+//		this.imagM = Herramientas.cargarImagen("styles/metal.png");
+		this.imagM = Herramientas.cargarImagen("styles/obsidian.png");
 		// metal o ladrillo
 		if (random == 3) {
 			this.destructible = false;

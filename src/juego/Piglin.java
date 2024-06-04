@@ -116,7 +116,7 @@ public class Piglin {
 	}
 
 	public void dispararHueso() {
-		if (hueso == null && random.nextInt(50) == 2) { // random para que no disparen SIEMPRE
+		if (hueso == null && random.nextInt(100) == 2) { // random para que no disparen SIEMPRE
 			hueso = new Hueso(this.x, this.y-10, this.direccion);
 		}
 	}
@@ -128,11 +128,11 @@ public class Piglin {
 				&& this.y - this.alto / 2 < ladrillo.getY() + ladrillo.getAlto() / 2;
 	}
 
-	public boolean colisionConBala(Bala balas) {
-		return balas != null && balas.getX() + balas.getDiametro() / 2 > this.x - this.ancho / 2
-				&& balas.getX() - balas.getDiametro() / 2 < this.x + this.ancho / 2
-				&& balas.getY() + balas.getDiametro() / 2 > this.y - this.alto / 2
-				&& balas.getY() - balas.getDiametro() / 2 < this.y + this.alto / 2;
+	public boolean colisionConFlecha(Flecha flecha) {
+		return flecha != null && flecha.getX() + flecha.getDiametro() / 2 > this.x - this.ancho / 2
+				&& flecha.getX() - flecha.getDiametro() / 2 < this.x + this.ancho / 2
+				&& flecha.getY() + flecha.getDiametro() / 2 > this.y - this.alto / 2
+				&& flecha.getY() - flecha.getDiametro() / 2 < this.y + this.alto / 2;
 	}
 	
 	private boolean colisionConPiglin(Piglin otroPiglin) {
